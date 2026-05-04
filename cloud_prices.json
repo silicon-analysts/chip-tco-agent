@@ -1,0 +1,210 @@
+{
+  "as_of": "2026-04-30",
+  "currency": "USD",
+  "unit": "$/GPU-hour (per single GPU within multi-GPU instance)",
+  "data_sources": [
+    "https://lambda.ai/pricing",
+    "https://www.coreweave.com/pricing",
+    "https://aws.amazon.com/ec2/instance-types/p5/",
+    "https://aws.amazon.com/ec2/instance-types/p6/",
+    "https://aws.amazon.com/ec2/capacityblocks/pricing/",
+    "https://instances.vantage.sh/aws/ec2/p5.48xlarge",
+    "https://instances.vantage.sh/aws/ec2/p5en.48xlarge",
+    "https://instances.vantage.sh/aws/ec2/p6-b200.48xlarge",
+    "https://instances.vantage.sh/azure/vm/nd96isrh100-v5",
+    "https://cloudprice.net/vm/Standard_ND96isr_MI300X_v5",
+    "https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/gpu-accelerated/ndmi300xv5-series",
+    "https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/gpu-accelerated/nd-gb200-v6-series",
+    "https://cloud.google.com/compute/gpus-pricing",
+    "https://docs.cloud.google.com/compute/docs/accelerator-optimized-machines",
+    "https://www.networkworld.com/article/4113150/aws-hikes-prices-for-ec2-capacity-blocks-amid-soaring-gpu-demand.html"
+  ],
+  "global_notes": {
+    "reserved_pricing": "AWS, Azure, GCP do not publish flat $/GPU-hr for 1yr/3yr reserved; values shown are computed from public discount tiers (AWS Savings Plans ~25-31%/45%, Azure RIs ~30-35%/45-55%, GCP CUDs ~28-37%/46-55%). Lambda and CoreWeave multi-year reserved are 'contact sales'; only 1-Click Cluster (Lambda) and 'Up to 60% off' Capacity Plans (CoreWeave) are public.",
+    "h100_market_state": "AWS p5 dropped 44% in June 2025; H100 is now broadly $2-7/GPU-hr depending on provider tier. Specialized neoclouds (RunPod, Crusoe, Vultr) frequently below $2/GPU-hr.",
+    "blackwell_ga_status": "B200 GA on AWS p6-b200 (limited regions), Azure ND-GB200-v6 (GA but not on public PAYG calculator), GCP A4 (reservation-only, no self-serve OD), Lambda (GA), CoreWeave (GA). Supply still constrained; NVIDIA reported ~3.6M-unit backlog in early 2026.",
+    "mi300x_provider_coverage": "Only Azure offers MI300X among the five providers. AWS declined publicly (pushes Trainium2). GCP TPU-focused. Lambda and CoreWeave are NVIDIA-only."
+  },
+  "pricing": {
+    "H100": {
+      "AWS": {
+        "instance": "p5.48xlarge",
+        "gpus_per_instance": 8,
+        "on_demand_per_gpu_hr": 6.88,
+        "1yr_reserved_per_gpu_hr": 4.75,
+        "3yr_reserved_per_gpu_hr": 3.78,
+        "capacity_block_per_gpu_hr": 3.93,
+        "ga_status": "GA",
+        "last_verified": "2026-04-28",
+        "confidence": "high (OD) / medium (reserved est.)"
+      },
+      "Azure": {
+        "instance": "Standard_ND96isr_H100_v5",
+        "gpus_per_instance": 8,
+        "on_demand_per_gpu_hr": 12.29,
+        "1yr_reserved_per_gpu_hr": 8.60,
+        "3yr_reserved_per_gpu_hr": 6.76,
+        "ga_status": "GA",
+        "last_verified": "2026-04-28"
+      },
+      "GCP": {
+        "instance": "a3-highgpu-8g",
+        "gpus_per_instance": 8,
+        "on_demand_per_gpu_hr": 10.98,
+        "1yr_reserved_per_gpu_hr": 7.69,
+        "3yr_reserved_per_gpu_hr": 4.94,
+        "spot_per_gpu_hr": 2.25,
+        "ga_status": "GA",
+        "last_verified": "2026-04-07"
+      },
+      "Lambda": {
+        "instance": "8x H100 SXM Cloud Instance",
+        "gpus_per_instance": 8,
+        "on_demand_per_gpu_hr": 3.99,
+        "1yr_reserved_per_gpu_hr": 5.54,
+        "3yr_reserved_per_gpu_hr": null,
+        "ga_status": "GA",
+        "last_verified": "2026-04-30",
+        "notes": "1-Click Cluster premium >OD because dedicated InfiniBand fabric; multi-yr reserved 'contact sales'."
+      },
+      "CoreWeave": {
+        "instance": "HGX H100 (8x)",
+        "gpus_per_instance": 8,
+        "on_demand_per_gpu_hr": 6.16,
+        "1yr_reserved_per_gpu_hr": null,
+        "3yr_reserved_per_gpu_hr": 2.46,
+        "ga_status": "GA",
+        "last_verified": "2026-04-30",
+        "notes": "3yr est. at 60% off list per public 'Up to 60%' tier."
+      }
+    },
+    "H200": {
+      "AWS": {
+        "instance": "p5en.48xlarge",
+        "gpus_per_instance": 8,
+        "on_demand_per_gpu_hr": 7.91,
+        "1yr_reserved_per_gpu_hr": 5.46,
+        "3yr_reserved_per_gpu_hr": 4.35,
+        "capacity_block_per_gpu_hr": 5.20,
+        "ga_status": "GA",
+        "last_verified": "2026-04-27"
+      },
+      "Azure": {
+        "instance": "Standard_ND96isr_H200_v5",
+        "gpus_per_instance": 8,
+        "on_demand_per_gpu_hr": 13.78,
+        "1yr_reserved_per_gpu_hr": 9.65,
+        "3yr_reserved_per_gpu_hr": 7.58,
+        "ga_status": "GA (limited)",
+        "last_verified": "2026-04-07"
+      },
+      "GCP": {
+        "instance": "a3-ultragpu-8g",
+        "gpus_per_instance": 8,
+        "on_demand_per_gpu_hr": 10.85,
+        "1yr_reserved_per_gpu_hr": 7.60,
+        "3yr_reserved_per_gpu_hr": 4.88,
+        "spot_per_gpu_hr": 3.72,
+        "ga_status": "GA (limited regions)",
+        "last_verified": "2026-04-07"
+      },
+      "Lambda": {
+        "instance": null,
+        "on_demand_per_gpu_hr": null,
+        "1yr_reserved_per_gpu_hr": null,
+        "3yr_reserved_per_gpu_hr": null,
+        "ga_status": "Not on public self-serve menu (private/reserved deals only)",
+        "last_verified": "2026-04-30"
+      },
+      "CoreWeave": {
+        "instance": "HGX H200 (8x)",
+        "gpus_per_instance": 8,
+        "on_demand_per_gpu_hr": 6.31,
+        "1yr_reserved_per_gpu_hr": null,
+        "3yr_reserved_per_gpu_hr": 2.52,
+        "ga_status": "GA",
+        "last_verified": "2026-04-30"
+      }
+    },
+    "B200": {
+      "AWS": {
+        "instance": "p6-b200.48xlarge",
+        "gpus_per_instance": 8,
+        "on_demand_per_gpu_hr": 14.24,
+        "1yr_reserved_per_gpu_hr": 9.83,
+        "3yr_reserved_per_gpu_hr": 7.83,
+        "capacity_block_per_gpu_hr": 9.36,
+        "ga_status": "GA (limited regions: us-east-1, us-east-2, us-west-2)",
+        "last_verified": "2026-04-29"
+      },
+      "Azure": {
+        "instance": "ND-GB200-v6 / ND-B200-v6",
+        "on_demand_per_gpu_hr": null,
+        "1yr_reserved_per_gpu_hr": null,
+        "3yr_reserved_per_gpu_hr": null,
+        "ga_status": "GA (announced GTC 2025) but not on public PAYG calculator; enterprise contract only",
+        "last_verified": "2026-04-30"
+      },
+      "GCP": {
+        "instance": "a4-highgpu-8g",
+        "gpus_per_instance": 8,
+        "on_demand_per_gpu_hr": null,
+        "1yr_reserved_per_gpu_hr": null,
+        "3yr_reserved_per_gpu_hr": null,
+        "spot_per_gpu_hr": 6.69,
+        "ga_status": "Reservation-only; no self-serve OD per GCP docs",
+        "last_verified": "2026-04-07"
+      },
+      "Lambda": {
+        "instance": "8x B200 SXM6 Cloud Instance",
+        "gpus_per_instance": 8,
+        "on_demand_per_gpu_hr": 6.69,
+        "1yr_reserved_per_gpu_hr": 8.87,
+        "3yr_reserved_per_gpu_hr": null,
+        "ga_status": "GA",
+        "last_verified": "2026-04-30"
+      },
+      "CoreWeave": {
+        "instance": "HGX B200 (8x)",
+        "gpus_per_instance": 8,
+        "on_demand_per_gpu_hr": 8.60,
+        "1yr_reserved_per_gpu_hr": null,
+        "3yr_reserved_per_gpu_hr": 3.44,
+        "ga_status": "GA",
+        "last_verified": "2026-04-30"
+      }
+    },
+    "MI300X": {
+      "AWS": {
+        "instance": null,
+        "ga_status": "Not offered — AWS publicly declined (pushes Trainium2)",
+        "last_verified": "2026-04-30"
+      },
+      "Azure": {
+        "instance": "Standard_ND96isr_MI300X_v5",
+        "gpus_per_instance": 8,
+        "on_demand_per_gpu_hr": 6.00,
+        "1yr_reserved_per_gpu_hr": 4.20,
+        "3yr_reserved_per_gpu_hr": 3.30,
+        "ga_status": "GA (since Q3 2024)",
+        "last_verified": "2026-04-30",
+        "notes": "OD figure is approximate; trackers conflict ($6 starting tier vs. higher full PAYG)."
+      },
+      "GCP": {
+        "instance": null,
+        "ga_status": "Not offered (TPU-focused)",
+        "last_verified": "2026-04-30"
+      },
+      "Lambda": {
+        "instance": null,
+        "ga_status": "Not on public menu",
+        "last_verified": "2026-04-30"
+      },
+      "CoreWeave": {
+        "instance": null,
+        "ga_status": "Not on public menu (NVIDIA-only fleet)",
+        "last_verified": "2026-04-30"
+      }
+    }
+  }
+}

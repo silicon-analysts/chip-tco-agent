@@ -1,0 +1,46 @@
+{
+  "as_of": "2026-04-30",
+  "data_sources": [
+    "https://www.eia.gov/electricity/monthly/",
+    "https://www.cbre.com/insights/reports/north-america-data-center-trends-h2-2025",
+    "https://docs.nvidia.com/dgx/",
+    "https://www.supermicro.com/en/products/system/AI/8U/SYS-821GE-TNHR"
+  ],
+  "electricity": {
+    "default_cost_per_kwh_usd": 0.10,
+    "regional_sensitivity": {
+      "us_avg": 0.082,
+      "virginia": { "low": 0.08, "high": 0.10 },
+      "high_cost_regions": { "low": 0.12, "high": 0.15 }
+    },
+    "notes": "EIA Electricity Monthly (Apr 2026). Industrial rate. Sensitivity test recommended for Virginia GS-5 rate transition."
+  },
+  "pue": {
+    "air_cooled": 1.4,
+    "liquid_cooled": 1.2,
+    "notes": "Power Usage Effectiveness. Liquid cooling required for B200-class TDP."
+  },
+  "colocation": {
+    "monthly_cost_per_kw_usd": 200,
+    "source": "CBRE Data Center Report H2 2025 — wholesale primary US avg $195.94/kW/month for 250–500 kW deployments",
+    "liquid_cooling_cdu_surcharge_monthly_usd": 1800,
+    "cross_connects_monthly_usd": 300
+  },
+  "support_and_staff": {
+    "oem_support_pct_capex_per_year": {
+      "default": 0.07,
+      "blackwell": 0.08
+    },
+    "staff_sre_pct_capex_per_year": 0.10,
+    "software_per_gpu_per_year_usd": 1500
+  },
+  "depreciation": {
+    "horizon_years": 3,
+    "method": "straight_line",
+    "notes": "Standard for GPU clusters; tax depreciation may differ."
+  },
+  "utilization_thresholds": {
+    "onprem_breakeven_vs_cloud_reserved_pct": 70,
+    "notes": "Below 70% sustained utilization, cloud reserved typically wins on TCO at 24-month horizon."
+  }
+}

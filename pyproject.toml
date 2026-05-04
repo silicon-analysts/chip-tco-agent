@@ -1,0 +1,48 @@
+[project]
+name = "chip-tco-agent"
+version = "0.1.0"
+description = "Chip TCO Comparison Agent — example notebook for Silicon Analysts MCP API"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Silicon Analysts" }
+]
+dependencies = [
+    "anthropic>=0.40.0",
+    "mcp>=1.0.0",
+    "pydantic>=2.0",
+    "rich>=13.0",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+notebook = [
+    "jupyter>=1.0",
+    "ipykernel>=6.0",
+]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.5.0",
+    "mypy>=1.10",
+]
+
+[project.scripts]
+chip-tco = "chip_tco_agent:cli"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+only-include = ["chip_tco_agent.py"]
+
+[tool.hatch.build.targets.wheel.sources]
+"chip_tco_agent.py" = "chip_tco_agent.py"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4", "SIM"]

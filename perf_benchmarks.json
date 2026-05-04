@@ -1,0 +1,72 @@
+{
+  "as_of": "2026-04-30",
+  "model": "Llama 3.1 70B",
+  "configuration": {
+    "quantization": "FP8",
+    "framework": "vLLM 0.9 / TRT-LLM",
+    "input_sequence_length": 1024,
+    "output_sequence_length": 256,
+    "concurrency": 50
+  },
+  "data_sources": [
+    "https://docs.nvidia.com/nim/benchmarking/llm/latest/performance.html",
+    "https://rocm.blogs.amd.com/artificial-intelligence/llama3-fp8-vllm/README.html",
+    "https://mlcommons.org/benchmarks/inference-datacenter/",
+    "https://www.coreweave.com/blog/coreweave-delivers-breakthrough-ai-performance-mlperf-v5-0",
+    "https://lambda.ai/blog/mlperf-inference-v5-1",
+    "https://arxiv.org/abs/2510.27583"
+  ],
+  "benchmarks": {
+    "H100_80GB_SXM": {
+      "per_gpu_aggregate_tokens_per_sec": 1800,
+      "per_gpu_aggregate_range": [1500, 2500],
+      "per_stream_tokens_per_sec": 62,
+      "per_stream_range": [53, 71],
+      "sustained_pct_of_peak": 0.70,
+      "sustained_per_gpu_tokens_per_sec": 1260,
+      "confidence_tier": "high",
+      "source_notes": "NVIDIA NIM perf docs; AMD ROCm cross-publication MI300-074; MLPerf v4.1"
+    },
+    "H200_141GB_SXM": {
+      "per_gpu_aggregate_tokens_per_sec": 3800,
+      "per_gpu_aggregate_range": [3000, 4500],
+      "per_stream_tokens_per_sec": 67,
+      "per_stream_range": [60, 75],
+      "sustained_pct_of_peak": 0.70,
+      "sustained_per_gpu_tokens_per_sec": 2660,
+      "confidence_tier": "high",
+      "source_notes": "MLPerf v5.1 Krai/Dell SGLang 31391 / vLLM 30893 on 8-GPU; CoreWeave MLPerf v5.0 blog"
+    },
+    "B200_180GB_SXM6_FP8": {
+      "per_gpu_aggregate_tokens_per_sec": 7000,
+      "per_gpu_aggregate_range": [6000, 8500],
+      "per_stream_tokens_per_sec": 125,
+      "per_stream_range": [100, 150],
+      "sustained_pct_of_peak": 0.70,
+      "sustained_per_gpu_tokens_per_sec": 4900,
+      "confidence_tier": "medium",
+      "source_notes": "ESTIMATED: halved from Lambda MLPerf v5.1 FP4 result (102725 tok/s on 8 B200, Llama 2 70B Offline). No public B200 FP8 70B benchmark as of 2026-04-30. VERIFY BEFORE COMMITTING."
+    },
+    "B200_180GB_SXM6_FP4": {
+      "per_gpu_aggregate_tokens_per_sec": 12500,
+      "confidence_tier": "high",
+      "source_notes": "Lambda MLPerf v5.1 (8x B200 Llama 2 70B Offline = 102725 tok/s). FP4 is high-water for B200; FP8 is more typical for production inference."
+    },
+    "MI300X_192GB": {
+      "per_gpu_aggregate_tokens_per_sec": 2000,
+      "per_gpu_aggregate_range": [1500, 2700],
+      "per_stream_tokens_per_sec": 57,
+      "per_stream_range": [50, 65],
+      "sustained_pct_of_peak": 0.70,
+      "sustained_per_gpu_tokens_per_sec": 1400,
+      "confidence_tier": "medium",
+      "confidence_notes": "High confidence on range, medium on point estimate",
+      "source_notes": "AMD ROCm blog MI300-074 Llama 3.1 70B FP8 vLLM; arXiv 2510.27583 (independent academic) shows real-world 37–66% of H100/H200"
+    }
+  },
+  "methodology_notes": {
+    "sustained_pct_of_peak": "Production sustained throughput is typically ~70% of peak aggregate, accounting for tail latency, batch efficiency, and SLO headroom.",
+    "ttft_interpretation": "p99 latency targets are interpreted as TTFT for a 1024-token prompt. End-to-end <500ms for 256-token output is infeasible at meaningful concurrency for 70B models on any current accelerator.",
+    "diurnal_peaking_factor": 4
+  }
+}
